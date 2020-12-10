@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+</head>
+<body>
+
+    <script>
+    var config = {
+        type: Phaser.AUTO,
+        width: 1334,
+        height: 750,
+        physics: {
+            default: "arcade",
+            arcade: {
+                gravity: { y: 200 }
+            }
+        },
+        scene: {
+            preload: preload,
+            create: create,
+            update: update
+        }
+    };
+
+    var game = new Phaser.Game(config);
+
+    GamePlay = {}
+    gameMode = {}
+    CommonEntity2D = {}
+    ColorTool = {}
+    gameMode.GameModeSelf = {}
+    gameMode.Debug = function (text) {
+        console.log(text)
+    }
+    gameMode.NewV3 = function (x, y, z) {
+        return {x: x, y: y, z: z}
+    }
+    gameMode.NewColor = function (color, alpha) {
+        return {color: color, alpha: alpha}
+    }
+
+    CommonEntity2D.New = function (instance, className, image, color, size, position, imagePosition, haveBoxCollider, haveRigidBody) {
+        if (haveRigidBody)
+        {
+            instance.Entity = gameMode.Scene.physics.add.image(position.x, position.y, image)
+        }
+        else
+        {
+            instance.Entity = gameMode.Scene.add.image(position.x, position.y, image)
+        }
+        instance.Entity.EntitySelf = instance
+        return instance
+    }
+
+    function preload ()
+    {
+        gameMode.Scene = this
+
+        this.load.setBaseURL("https://raw.githubusercontent.com/khaccanh/Games/master");
+     
+        GamePlay.Preload(this)
+
+        resize();
+        window.addEventListener("resize", resize, false);
+    }
+
+    function create ()
+    {
+
+        //var particles = this.add.particles('red');
+
+        //var emitter = particles.createEmitter({
+        //    speed: 100,
+        //    scale: { start: 1, end: 0 },
+        //    blendMode: 'ADD'
+        //});
+
+        //var logo = this.physics.add.image(400, 100, 'logo');
+
+        //logo.setVelocity(100, 200);
+        //logo.setBounce(1, 1);
+        //logo.setCollideWorldBounds(true);
+
+        //emitter.startFollow(logo);
+
+        this.input.on("pointermove", function (pointer, targets) {
+            if (pointer.isDown)
+            {
+                GamePlay.OnPointerMove(pointer, targets)
+            }
+        }, this);
+        GamePlay.Start(this)
+    }
+
+    function update ()
+    {
+        GamePlay.UpdateFrame(this)
+    }
+
+    function resize() {
+        var canvas = document.querySelector("canvas");
+        var windowWidth = window.innerWidth;
+        var windowHeight = window.innerHeight;
+        var windowRatio = windowWidth / windowHeight;
+        var gameRatio = game.config.width / game.config.height;
+        if(windowRatio < gameRatio){
+            canvas.style.width = windowWidth + "px";
+            canvas.style.height = (windowWidth / gameRatio) + "px";
+        }
+        else{
+            canvas.style.width = (windowHeight * gameRatio) + "px";
+            canvas.style.height = windowHeight + "px";
+        }
+    }
+
+    //<cn>GamePlay</cn><ct>GamePlay</ct>
+GamePlay.Start = function(self){
+    gameMode.Debug(1)
+    CommonEntity2D.New({},"EntityBall","BasketBall.png",gameMode.NewColor(ColorTool.White,1),1,gameMode.NewV3(400,100,0),gameMode.NewV3(0,0,0),true,false)
+    var logo = CommonEntity2D.New({},"EntityBall","BasketBall.png",gameMode.NewColor(ColorTool.White,1),1,gameMode.NewV3(400,100,0),gameMode.NewV3(0,0,0),true,false)
+    logo.Entity.setInteractive()
+    gameMode.GameModeSelf.A = 1
+}
+GamePlay.Update = function(self){
+    while (true){
+        GamePlay.UpdateFrame(self)
+        coroutine.yield(0)
+    }
+}
+GamePlay.UpdateFrame = function(self){
+    gameMode.Debug(gameMode.GameModeSelf.A)
+}
+GamePlay.OnPointerMove = function(pointer, targets){
+    targets[0].x = pointer.x
+    targets[0].y = pointer.y
+    gameMode.GameModeSelf.A = 2
+}
+GamePlay.Preload = function(self){
+    gameMode.Scene.load.image("BasketBall.png", "BasketBall.png")
+    gameMode.Scene.load.image("BasketBall.png", "BasketBall.png")
+    gameMode.Scene.load.image("BasketBall.png", "BasketBall.png")
+}
+
+
+    </script>
+
+</body>
+</html>
