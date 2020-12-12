@@ -128,6 +128,20 @@ GamePlay.Start = function(self){
     header.Entity.tint = 0xef6e3f
     logo.Entity.setInteractive()
     gameMode.GameModeSelf.A = 1
+    gameMode.Scene.add.text(1334*0.5 - 60, 25, "quiz", { font: "55px Arial", fontSize: 300 })
+    gameMode.Scene.add.text(1334*0.5 - 350, 125, "Find correct number in this sentence", { font: "35px Arial", color: "#000" })
+    var choose1 = CommonEntity2D.New({},"EntityBall","Square.png",gameMode.NewColor(ColorTool.White,1),1,gameMode.NewV3(gameMode.ScreenWidth * 0.5,450,0),gameMode.NewV3(0,0,0),true,false)
+    choose1.Entity.displayWidth = 800
+    choose1.Entity.displayHeight = 100
+    choose1.Entity.tint = 0xecfbfb
+    gameMode.Scene.add.text(1334*0.5 - 350, 430, "Find correct number in this sentence", { font: "35px Arial", color: "#000" })
+    var choose2 = CommonEntity2D.New({},"EntityBall","Square.png",gameMode.NewColor(ColorTool.White,1),1,gameMode.NewV3(gameMode.ScreenWidth * 0.5,575,0),gameMode.NewV3(0,0,0),true,false)
+    choose2.Entity.displayWidth = 800
+    choose2.Entity.displayHeight = 100
+    choose2.Entity.tint = 0xecfbfb
+    gameMode.Scene.add.text(1334*0.5 - 350, 555, "Find correct number in this sentence", { font: "35px Arial", color: "#000" })
+}
+actionOnClick = function(){
 }
 GamePlay.Update = function(self){
     while (true){
