@@ -117,8 +117,15 @@
     //<cn>GamePlay</cn><ct>GamePlay</ct>
 GamePlay.Start = function(self){
     gameMode.Debug(1)
-    CommonEntity2D.New({},"EntityBall","BasketBall.png",gameMode.NewColor(ColorTool.White,1),1,gameMode.NewV3(400,100,0),gameMode.NewV3(0,0,0),true,false)
-    var logo = CommonEntity2D.New({},"EntityBall","BasketBall.png",gameMode.NewColor(ColorTool.White,1),1,gameMode.NewV3(400,100,0),gameMode.NewV3(0,0,0),true,false)
+    self.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#1cb3b2")
+    var bg = CommonEntity2D.New({},"EntityBall","Square.png",gameMode.NewColor(ColorTool.White,1),1,gameMode.NewV3(gameMode.ScreenWidth * 0.5,gameMode.ScreenHeight * 0.5,0),gameMode.NewV3(0,0,0),true,false)
+    var logo = CommonEntity2D.New({},"EntityBall","BasketBall.png",gameMode.NewColor(ColorTool.White,1),1,gameMode.NewV3(500,300,0),gameMode.NewV3(0,0,0),true,false)
+    var header = CommonEntity2D.New({},"EntityBall","Square.png",gameMode.NewColor(ColorTool.White,1),1,gameMode.NewV3(gameMode.ScreenWidth * 0.5,50,0),gameMode.NewV3(0,0,0),true,false)
+    bg.Entity.displayWidth = 1000
+    bg.Entity.displayHeight = 1000
+    header.Entity.displayWidth = 1334
+    header.Entity.displayHeight = 100
+    header.Entity.tint = 0xef6e3f
     logo.Entity.setInteractive()
     gameMode.GameModeSelf.A = 1
 }
@@ -137,9 +144,11 @@ GamePlay.OnPointerMove = function(pointer, targets){
     gameMode.GameModeSelf.A = 2
 }
 GamePlay.Preload = function(self){
+    gameMode.ScreenWidth = 1334
+    gameMode.ScreenHeight = 750
+    gameMode.Scene.load.image("white.png", "white.png")
     gameMode.Scene.load.image("BasketBall.png", "BasketBall.png")
-    gameMode.Scene.load.image("BasketBall.png", "BasketBall.png")
-    gameMode.Scene.load.image("BasketBall.png", "BasketBall.png")
+    gameMode.Scene.load.image("Square.png", "Square.png")
 }
 
 
