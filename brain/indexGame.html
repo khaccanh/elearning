@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.24.0/dist/phaser.js"></script>
+</head>
+<body>
+
+    <script>
+    var config = {
+        type: Phaser.AUTO,
+        width: 1334,
+        height: 750,
+        physics: {
+            default: "arcade",
+            arcade: {
+                gravity: { y: 200 }
+            }
+        },
+        scene: {
+            preload: preload,
+            create: create,
+            update: update
+        }
+    };
+
+    var game = new Phaser.Game(config);
+
+    GamePlay = {}
+    gameMode = {}
+    WebEntity = {}
+    PhaserCommon = {}
+    ColorTool = {}
+    gameMode.GameModeSelf = {}
+    gameMode.ArrayEntity = []
+    gameMode.Debug = function (text) {
+        console.log(text)
+    }
+    gameMode.NewV2 = function (x, y) {
+        return {x: x, y: y}
+    }
+    gameMode.NewColor = function (color, alpha) {
+        return {color: color, alpha: alpha}
+    }
+
+    WebEntity.New = function (instance, className, image, position, havePhysic) {
+        if (havePhysic)
+        {
+            instance.Entity = gameMode.Scene.physics.add.image(position.x, position.y, image)
+            instance.Entity.body.allowGravity = false
+        }
+        else
+        {
+            instance.Entity = gameMode.Scene.add.image(position.x, position.y, image)
+        }
+        instance.Entity.EntitySelf = instance
+        instance.Class = className
+        if (instance.Class != null)
+        {
+            instance.Class.Start(instance)
+            gameMode.ArrayEntity.push(instance)
+        }
+        return instance
+    }
+
+    WebEntity.AddTriggerFunction = function (entity1, entity2, triggerFunction) {
+        gameMode.Scene.physics.add.collider(entity1.Entity, entity2.Entity, WebEntity.OnTriggerEnter)
+    }
+
+    WebEntity.OnTriggerEnter = function (entity1, entity2) {
+        entity1.EntitySelf.Class.OnTriggerEnter(entity1.EntitySelf, entity2.EntitySelf)
+    }
+
+    PhaserCommon.SetInteractive = function (image) {
+        image.Entity.setInteractive()
+    }
+
+    PhaserCommon.ImageSize = function (image, size) {
+        image.Entity.displayWidth = size.x
+        image.Entity.displayHeight = size.y
+    }
+
+    PhaserCommon.ImageColor = function (image, color) {
+        image.Entity.tint = 0x1cb3b2
+    }
+
+    PhaserCommon.ImagePosition = function (image, position) {
+        image.Entity.x = position.x
+        image.Entity.y = position.y
+    }
+
+    PhaserCommon.SetCanvas = function (size, color) {
+        gameMode.ScreenWidth = size.x
+        gameMode.ScreenHeight = size.y
+        gameMode.Scene.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor(color.color)
+    }
+
+    function preload ()
+    {
+        gameMode.Scene = this
+
+        this.load.setBaseURL("https://raw.githubusercontent.com/khaccanh/elearning/master");
+     
+        GamePlay.Preload(this)
+
+        resize();
+        window.addEventListener("resize", resize, false);
+    }
+
+    function create ()
+    {
+
+        //var particles = this.add.particles('red');
+
+        //var emitter = particles.createEmitter({
+        //    speed: 100,
+        //    scale: { start: 1, end: 0 },
+        //    blendMode: 'ADD'
+        //});
+
+        //var logo = this.physics.add.image(400, 100, 'logo');
+
+        //logo.setVelocity(100, 200);
+        //logo.setBounce(1, 1);
+        //logo.setCollideWorldBounds(true);
+
+        //emitter.startFollow(logo);
+
+        this.input.on("pointermove", function (pointer, targets) {
+            if (pointer.isDown)
+            {
+                //GamePlay.OnPointerMove(pointer, targets)
+                gameMode.Debug(targets.length)
+                for (var i = 0; i < targets.length; ++i)
+                {
+                    targets[i].EntitySelf.Class.OnPointerMove(targets[i].EntitySelf, pointer)
+                }
+            }
+        }, this);
+        GamePlay.Start(this)   
+    }
+
+    function update ()
+    {
+        GamePlay.UpdateFrame(this)
+        for (var i = 0; i < gameMode.ArrayEntity.length; ++i)
+        {
+            gameMode.ArrayEntity[i].Class.Update(gameMode.ArrayEntity[i])
+        }
+    }
+
+    function resize() {
+        var canvas = document.querySelector("canvas");
+        var windowWidth = window.innerWidth;
+        var windowHeight = window.innerHeight;
+        var windowRatio = windowWidth / windowHeight;
+        var gameRatio = game.config.width / game.config.height;
+        if(windowRatio < gameRatio){
+            canvas.style.width = windowWidth + "px";
+            canvas.style.height = (windowWidth / gameRatio) + "px";
+        }
+        else{
+            canvas.style.width = (windowHeight * gameRatio) + "px";
+            canvas.style.height = windowHeight + "px";
+        }
+    }
+
+    //<cn>GamePlay</cn><ct>GamePlay</ct>
+GamePlay.Start = function(self){
+    var bg = WebEntity.New({},null,"Square.png",gameMode.NewV2(gameMode.ScreenWidth * 0.5,gameMode.ScreenHeight * 0.5),false)
+    PhaserCommon.ImageSize(bg,gameMode.NewV2(1000,1000))
+    PhaserCommon.ImageColor(bg,gameMode.NewColor("#1cb3b2",1))
+    gameMode.GameModeSelf.Ball = WebEntity.New({},EntityBall,"BasketBall.png",gameMode.NewV2(800,300),true)
+    gameMode.GameModeSelf.Basket = WebEntity.New({},EntityBox,"BasketBall.png",gameMode.NewV2(800,300),true)
+    WebEntity.AddTriggerFunction(gameMode.GameModeSelf.Basket,gameMode.GameModeSelf.Ball,EntityBox.OnTriggerEnter)
+    gameMode.GameModeSelf.Basket.Entity.setImmovable(true)
+}
+GamePlay.UpdateFrame = function(self){
+    if (game.input.mousePointer.isDown){
+        gameMode.GameModeSelf.Ball.vy = -1000
+    }
+}
+GamePlay.Preload = function(self){
+    PhaserCommon.SetCanvas(gameMode.NewV2(1334,750),gameMode.NewColor("#000000",1))
+    gameMode.Scene.load.image("BasketBall.png","BasketBall.png")
+    gameMode.Scene.load.image("Square.png","Square.png")
+}
+//<c></c>
+//<cn>EntityBall</cn><ct>Entity</ct>
+EntityBall = { }
+EntityBall.Start = function(self){
+    self.vy = 0
+    gameMode.Debug("start")
+}
+EntityBall.Update = function(self){
+    self.vy = self.vy + 0.016 * 1000
+    self.Entity.body.velocity.x = 200
+    self.Entity.body.velocity.y = self.vy
+    if (self.Entity.x > 1200){
+        self.Entity.x = 0
+    }
+    if (self.Entity.y > 700){
+        self.vy = -1000
+    }
+}
+//<c></c>
+//<cn>EntityBox</cn><ct>Entity</ct>
+EntityBox = { }
+EntityBox.Start = function(self){
+    PhaserCommon.SetInteractive(self)
+}
+EntityBox.Update = function(self){
+}
+EntityBox.OnPointerMove = function(self, pointer){
+    gameMode.Debug("aaaaa")
+    PhaserCommon.ImagePosition(self,gameMode.NewV2(pointer.x,pointer.y))
+}
+EntityBox.OnTriggerEnter = function(self, collider){
+    gameMode.Debug("cham")
+}
+
+
+    </script>
+
+</body>
+</html>
