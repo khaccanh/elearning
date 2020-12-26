@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Code Learning</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/phaser@3.24.0/dist/phaser.js"></script>
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="#page-top">Run Code</a>
+                <div><button class="btn btn-secondary btn-xl" id="reloadButton" type="submit" onclick="reloadRunCode()"><i class="fas fa-sync-alt"></i></button></div>
+                <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">App Store</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">Friend</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <section class="page-section" id="phaserdisplay">
+            <!-- 16:9 aspect ratio -->
+
+        </section>
+        <!-- Portfolio Section-->
+        <section class="page-section portfolio" id="portfolio">
+            <div class="container">
+                <!-- Portfolio Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">App Store</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- Portfolio Grid Items-->
+                <div class="row justify-content-center">
+                    <!-- Portfolio Item 1-->
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal1">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/img/portfolio/among-us-switch-hero.jpg" alt="" />
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 2-->
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal2">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/img/portfolio/animal-crossing-new-horizons.jpg" alt="" />
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 3-->
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal3">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/img/portfolio/minecraft-switch-hero.jpg" alt="" />
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 4-->
+                    <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
+                        <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal4">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/img/portfolio/immortals-fenyx-rising-switch-hero.jpg" alt="" />
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 5-->
+                    <div class="col-md-6 col-lg-4 mb-5 mb-md-0">
+                        <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal5">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/img/portfolio/hades-switch-hero.jpg" alt="" />
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 6-->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal6">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/img/portfolio/candy-2048-challenge-switch-hero.jpg" alt="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- About Section-->
+        <section class="page-section bg-primary text-white mb-0" id="about">
+            <div class="container">
+                <!-- About Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-white">Friend</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom divider-light">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- About Section Content-->
+                <div class="row">
+                    <div class="col-lg-4 ml-auto"><p class="lead">This is a tool created by Unity. You can make causal game, online game and web game.</p></div>
+                    <div class="col-lg-4 mr-auto"><p class="lead">You can create your own custom game, public game, and add your friend to play!</p></div>
+                </div>
+                <!-- About Section Button-->
+                <div class="text-center mt-4">
+                    <a class="btn btn-xl btn-outline-light" href="https://startbootstrap.com/theme/freelancer/">
+                        <i class="fas fa-directions mr-2"></i>
+                        Visit Friend!
+                    </a>
+                </div>
+            </div>
+        </section>
+        <!-- Contact Section-->
+        <section class="page-section" id="contact">
+            <div class="container">
+                <!-- Contact Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Sign In</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- Contact Section Form-->
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
+                        <form id="contactForm" name="sentMessage" novalidate="novalidate">
+                            <div class="control-group">
+                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                                    <label>Name</label>
+                                    <input class="form-control" id="name" type="text" placeholder="Name" required="required" data-validation-required-message="Please enter your name." />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                                    <label>Password</label>
+                                    <input class="form-control" id="email" type="password" placeholder="Password" required="required" data-validation-required-message="Please enter your password." />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <br />
+                            <div id="success"></div>
+                            <div class="form-group"><button class="btn btn-primary btn-xl" id="sendMessageButton" type="submit">Login</button></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="footer text-center">
+            <div class="container">
+                <div class="row">
+                    <!-- Footer Location-->
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <h4 class="text-uppercase mb-4">Location</h4>
+                        <p class="lead mb-0">
+                            54 street 74 Thanh My Loi
+                            <br />
+                            Thu Duc, Ho Chi Minh
+                        </p>
+                    </div>
+                    <!-- Footer Social Icons-->
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <h4 class="text-uppercase mb-4">Around the Web</h4>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-linkedin-in"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-dribbble"></i></a>
+                    </div>
+                    <!-- Footer About Text-->
+                    <div class="col-lg-4">
+                        <h4 class="text-uppercase mb-4">About App</h4>
+                        <p class="lead mb-0">
+                            Brain Trainer is application created by
+                            <a href="https://unity3d.com/">Unity 3D</a>
+                            .
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Copyright Section-->
+        <div class="copyright py-4 text-center text-white">
+            <div class="container"><small>Copyright © liberty technology</small></div>
+        </div>
+        <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
+        <div class="scroll-to-top d-lg-none position-fixed">
+            <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a>
+        </div>
+        <!-- Portfolio Modals-->
+        <!-- Portfolio Modal 1-->
+        <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-labelledby="portfolioModal1Label" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                    <div class="modal-body text-center">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal1Label">Among Us</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Image-->
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/among-us-switch-hero.jpg" alt="" />
+                                    <!-- Portfolio Modal - Text-->
+                                    <p class="mb-5"><b>Among Us</b> is an online multiplayer social deduction game developed and published by American game studio Innersloth. It was released on iOS and Android devices in June 2018 and on Microsoft Windows in November 2018, featuring cross-platform play between these platforms. The game was also released on the Nintendo Switch in December 2020, and has planned releases for the Xbox One and Xbox Series X and Series S in 2021.</p>
+                                    <button class="btn btn-primary" data-dismiss="modal">
+                                        <i class="fas fa-times fa-fw"></i>
+                                        Close Window
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio Modal 2-->
+        <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-labelledby="portfolioModal2Label" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                    <div class="modal-body text-center">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal2Label">Animal Crossing</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Image-->
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/animal-crossing-new-horizons.jpg" alt="" />
+                                    <!-- Portfolio Modal - Text-->
+                                    <p class="mb-5"><b>Animal Crossing</b> is a social simulation video game series developed and published by Nintendo and created by Katsuya Eguchi and Hisashi Nogami. In Animal Crossing, the player character is a human who lives in a village inhabited by various anthropomorphic animals, carrying out various activities such as fishing, bug catching, and fossil hunting. The series is notable for its open-ended gameplay and extensive use of the video game console's internal clock and calendar to simulate real passage of time.</p>
+                                    <button class="btn btn-primary" data-dismiss="modal">
+                                        <i class="fas fa-times fa-fw"></i>
+                                        Close Window
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio Modal 3-->
+        <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-labelledby="portfolioModal3Label" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                    <div class="modal-body text-center">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal3Label">Minecraft</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Image-->
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/minecraft-switch-hero.jpg" alt="" />
+                                    <!-- Portfolio Modal - Text-->
+                                    <p class="mb-5"><b>Minecraft</b> is a sandbox video game developed by Mojang. The game was created by Markus "Notch" Persson in the Java programming language. Following several early test versions, it was released as a paid public alpha for personal computers in 2009 before releasing in November 2011, with Jens Bergensten taking over development. Minecraft has since been ported to several other platforms and is the best-selling video game of all time, with 200 million copies sold and 126 million monthly active users as of 2020.</p>
+                                    <button class="btn btn-primary" data-dismiss="modal">
+                                        <i class="fas fa-times fa-fw"></i>
+                                        Close Window
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio Modal 4-->
+        <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-labelledby="portfolioModal4Label" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                    <div class="modal-body text-center">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal4Label">Immortals Fenyx Rising</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Image-->
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/immortals-fenyx-rising-switch-hero.jpg" alt="" />
+                                    <!-- Portfolio Modal - Text-->
+                                    <p class="mb-5"><b>Immortals Fenyx Rising</b> (originally known as Gods and Monsters) is an action-adventure video game developed by Ubisoft Quebec and published by Ubisoft. The game was released for Amazon Luna, Windows, Nintendo Switch, PlayStation 4, PlayStation 5, Stadia, Xbox One and Xbox Series X and S on December 3, 2020.</p>
+                                    <button class="btn btn-primary" data-dismiss="modal">
+                                        <i class="fas fa-times fa-fw"></i>
+                                        Close Window
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio Modal 5-->
+        <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-labelledby="portfolioModal5Label" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                    <div class="modal-body text-center">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal5Label">Hades</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Image-->
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/hades-switch-hero.jpg" alt="" />
+                                    <!-- Portfolio Modal - Text-->
+                                    <p class="mb-5"><b>Hades</b> is a roguelike action role-playing video game developed and published by Supergiant Games. The game was released for Microsoft Windows, macOS, and Nintendo Switch on September 17, 2020, which followed an early access release from December 2018.</p>
+                                    <button class="btn btn-primary" data-dismiss="modal">
+                                        <i class="fas fa-times fa-fw"></i>
+                                        Close Window
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio Modal 6-->
+        <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-labelledby="portfolioModal6Label" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                    <div class="modal-body text-center">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal6Label">Candy 2048</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Image-->
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/candy-2048-challenge-switch-hero.jpg" alt="" />
+                                    <!-- Portfolio Modal - Text-->
+                                    <p class="mb-5"><b>Candy 2048</b></p>
+                                    <button class="btn btn-primary" data-dismiss="modal">
+                                        <i class="fas fa-times fa-fw"></i>
+                                        Close Window
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <!-- Contact form JS-->
+        <script src="assets/mail/jqBootstrapValidation.js"></script>
+        <script src="assets/mail/contact_me.js"></script>
+        <script src="assets/mail/run_code.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <script>
+        var config = {
+            type: Phaser.AUTO,
+            width: 1334,
+            height: 750,
+            physics: {
+                default: "arcade",
+                arcade: {
+                    gravity: { y: 200 }
+                }
+            },
+            scene: {
+                preload: preload,
+                create: create,
+                update: update
+            },
+            parent: 'phaserdisplay'
+        };
+
+        var game = new Phaser.Game(config);
+
+        GamePlay = {}
+        gameMode = {}
+        WebEntity = {}
+        PhaserCommon = {}
+        ColorTool = {}
+        gameMode.GameModeSelf = {}
+        gameMode.ArrayEntity = []
+        gameMode.Debug = function (text) {
+            console.log(text)
+        }
+        gameMode.NewV2 = function (x, y) {
+            return {x: x, y: y}
+        }
+        gameMode.NewColor = function (color, alpha) {
+            return {color: color, alpha: alpha}
+        }
+
+        WebEntity.New = function (instance, className, image, position, havePhysic) {
+            if (havePhysic)
+            {
+                instance.Entity = gameMode.Scene.physics.add.image(position.x, position.y, image)
+                instance.Entity.body.allowGravity = false
+            }
+            else
+            {
+                instance.Entity = gameMode.Scene.add.image(position.x, position.y, image)
+            }
+            instance.Entity.EntitySelf = instance
+            instance.Class = className
+            if (instance.Class != null)
+            {
+                instance.Class.Start(instance)
+                gameMode.ArrayEntity.push(instance)
+            }
+            return instance
+        }
+
+        WebEntity.AddTriggerFunction = function (entity1, entity2, triggerFunction) {
+            gameMode.Scene.physics.add.collider(entity1.Entity, entity2.Entity, WebEntity.OnTriggerEnter)
+        }
+
+        WebEntity.OnTriggerEnter = function (entity1, entity2) {
+            entity1.EntitySelf.Class.OnTriggerEnter(entity1.EntitySelf, entity2.EntitySelf)
+        }
+
+        PhaserCommon.SetInteractive = function (image) {
+            image.Entity.setInteractive()
+        }
+
+        PhaserCommon.ImageSize = function (image, size) {
+            image.Entity.displayWidth = size.x
+            image.Entity.displayHeight = size.y
+        }
+
+        PhaserCommon.ImageColor = function (image, color) {
+            image.Entity.tint = 0x1cb3b2
+        }
+
+        PhaserCommon.ImagePosition = function (image, position) {
+            image.Entity.x = position.x
+            image.Entity.y = position.y
+        }
+
+        PhaserCommon.SetCanvas = function (size, color) {
+            gameMode.ScreenWidth = size.x
+            gameMode.ScreenHeight = size.y
+            gameMode.Scene.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor(color.color)
+        }
+
+        function preload ()
+        {
+            gameMode.Scene = this
+
+            this.load.setBaseURL("https://raw.githubusercontent.com/khaccanh/elearning/master");
+
+            GamePlay.Preload(this)
+
+            resize();
+            window.addEventListener("resize", resize, false);
+        }
+
+        function create ()
+        {
+
+            //var particles = this.add.particles('red');
+
+            //var emitter = particles.createEmitter({
+            //    speed: 100,
+            //    scale: { start: 1, end: 0 },
+            //    blendMode: 'ADD'
+            //});
+
+            //var logo = this.physics.add.image(400, 100, 'logo');
+
+            //logo.setVelocity(100, 200);
+            //logo.setBounce(1, 1);
+            //logo.setCollideWorldBounds(true);
+
+            //emitter.startFollow(logo);
+
+            this.input.on("pointermove", function (pointer, targets) {
+                if (pointer.isDown)
+                {
+                    //GamePlay.OnPointerMove(pointer, targets)
+                    gameMode.Debug(targets.length)
+                    for (var i = 0; i < targets.length; ++i)
+                    {
+                        targets[i].EntitySelf.Class.OnPointerMove(targets[i].EntitySelf, pointer)
+                    }
+                }
+            }, this);
+            GamePlay.Start(this)
+        }
+
+        function update ()
+        {
+            GamePlay.UpdateFrame(this)
+            for (var i = 0; i < gameMode.ArrayEntity.length; ++i)
+            {
+                gameMode.ArrayEntity[i].Class.Update(gameMode.ArrayEntity[i])
+            }
+        }
+
+        function resize() {
+            var canvas = document.querySelector("canvas");
+            var windowWidth = window.innerWidth;
+            var windowHeight = window.innerHeight;
+            var windowRatio = windowWidth / windowHeight;
+            var gameRatio = game.config.width / game.config.height;
+            if(windowRatio < gameRatio){
+                canvas.style.width = windowWidth + "px";
+                canvas.style.height = (windowWidth / gameRatio) + "px";
+            }
+            else{
+                canvas.style.width = (windowHeight * gameRatio) + "px";
+                canvas.style.height = windowHeight + "px";
+            }
+        }
+
+        //<cn>GamePlay</cn><ct>GamePlay</ct>
+    GamePlay.Start = function(self){
+        var bg = WebEntity.New({},null,"Square.png",gameMode.NewV2(gameMode.ScreenWidth * 0.5,gameMode.ScreenHeight * 0.5),false)
+        PhaserCommon.ImageSize(bg,gameMode.NewV2(1000,1000))
+        PhaserCommon.ImageColor(bg,gameMode.NewColor("#1cb3b2",1))
+        gameMode.GameModeSelf.Ball = WebEntity.New({},EntityBall,"BasketBall.png",gameMode.NewV2(800,300),true)
+        gameMode.GameModeSelf.Basket = WebEntity.New({},EntityBox,"BasketBall.png",gameMode.NewV2(800,300),true)
+        WebEntity.AddTriggerFunction(gameMode.GameModeSelf.Basket,gameMode.GameModeSelf.Ball,EntityBox.OnTriggerEnter)
+        gameMode.GameModeSelf.Basket.Entity.setImmovable(true)
+    }
+    GamePlay.UpdateFrame = function(self){
+        if (game.input.mousePointer.isDown){
+            gameMode.GameModeSelf.Ball.vy = -1000
+        }
+    }
+    GamePlay.Preload = function(self){
+        PhaserCommon.SetCanvas(gameMode.NewV2(1334,750),gameMode.NewColor("#000000",1))
+        gameMode.Scene.load.image("BasketBall.png","BasketBall.png")
+        gameMode.Scene.load.image("Square.png","Square.png")
+    }
+    //<c></c>
+    //<cn>EntityBall</cn><ct>Entity</ct>
+    EntityBall = { }
+    EntityBall.Start = function(self){
+        self.vy = 0
+        gameMode.Debug("start")
+    }
+    EntityBall.Update = function(self){
+        self.vy = self.vy + 0.016 * 1000
+        self.Entity.body.velocity.x = 200
+        self.Entity.body.velocity.y = self.vy
+        if (self.Entity.x > 1200){
+            self.Entity.x = 0
+        }
+        if (self.Entity.y > 700){
+            self.vy = -1000
+        }
+    }
+    //<c></c>
+    //<cn>EntityBox</cn><ct>Entity</ct>
+    EntityBox = { }
+    EntityBox.Start = function(self){
+        PhaserCommon.SetInteractive(self)
+    }
+    EntityBox.Update = function(self){
+    }
+    EntityBox.OnPointerMove = function(self, pointer){
+        gameMode.Debug("aaaaa")
+        PhaserCommon.ImagePosition(self,gameMode.NewV2(pointer.x,pointer.y))
+    }
+    EntityBox.OnTriggerEnter = function(self, collider){
+        gameMode.Debug("cham")
+    }
+
+
+        </script>
+    </body>
+</html>
