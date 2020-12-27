@@ -128,7 +128,6 @@
         this.input.on("pointermove", function (pointer, targets) {
             if (pointer.isDown)
             {
-                resize()
                 //GamePlay.OnPointerMove(pointer, targets)
                 gameMode.Debug(targets.length)
                 for (var i = 0; i < targets.length; ++i)
@@ -168,8 +167,8 @@
     function resize2() {
         var canvas = document.querySelector("canvas");
 
-            canvas.style.width = 531 + "px";
-            canvas.style.height = 300 + "px";
+            canvas.style.width = 700 + "px";
+            canvas.style.height = 395 + "px";
     }
 
     //<cn>GamePlay</cn><ct>GamePlay</ct>
