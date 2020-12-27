@@ -128,6 +128,7 @@
         this.input.on("pointermove", function (pointer, targets) {
             if (pointer.isDown)
             {
+                resize()
                 //GamePlay.OnPointerMove(pointer, targets)
                 gameMode.Debug(targets.length)
                 for (var i = 0; i < targets.length; ++i)
