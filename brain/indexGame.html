@@ -242,12 +242,9 @@ GamePlay.Swap = function(candyOrgin, candyTarget){
         candyTarget.y = tmp
         gameMode.GameModeSelf.ArrayCandy[candyTarget.x][candyTarget.y] = candyTarget
         gameMode.GameModeSelf.ArrayCandy[candyOrgin.x][candyOrgin.y] = candyOrgin
-    }
-    if (candyTarget != null){
-        PhaserCommon.ImagePosition(candyTarget,gameMode.NewV2(320 + candyTarget.x*85,80 + candyTarget.y*85))
-    }
-    if (candyOrgin != null){
-        PhaserCommon.ImagePosition(candyOrgin,gameMode.NewV2(320 + candyOrgin.x*85,80 + candyOrgin.y*85))
+        gameMode.Debug(gameMode.Scene.tweens)
+        gameMode.Scene.tweens.add({targets: candyTarget.Entity, x: 320 + candyTarget.x*85, y: 80 + candyTarget.y*85, duration: 200, ease: "Power2", completeDelay: 0})
+        gameMode.Scene.tweens.add({targets: candyOrgin.Entity, x: 320 + candyOrgin.x*85, y: 80 + candyOrgin.y*85, duration: 200, ease: "Power2", completeDelay: 0})
     }
 }
 GamePlay.OnPointerMove = function(pointer, targets){
@@ -269,33 +266,15 @@ EntityBox.OnPointerMove2 = function(self, pointer){
     if (gameMode.GameModeSelf.SelectedCandy == self){
         var absX = Math.abs(pointer.x - gameMode.GameModeSelf.StartX)
         var absY = Math.abs(pointer.y - gameMode.GameModeSelf.StartY)
-        if (gameMode.GameModeSelf.IsMoveH){
-            PhaserCommon.ImagePosition(self,gameMode.NewV2(pointer.x,self.Entity.y))
-            if (absX > 75){
-                gameMode.GameModeSelf.SelectedCandy = null
-                GamePlay.Swap(self, gameMode.GameModeSelf.TargetCandy)
-            }
+        if (absX > 50){
+            gameMode.GameModeSelf.SelectedCandy = null
+            gameMode.GameModeSelf.TargetCandy = EntityBox.FindTarget(self, true, pointer.x - gameMode.GameModeSelf.StartX)
+            GamePlay.Swap(self, gameMode.GameModeSelf.TargetCandy)
         }
-        if (gameMode.GameModeSelf.IsMoveV){
-            PhaserCommon.ImagePosition(self,gameMode.NewV2(self.Entity.x,pointer.y))
-            if (absY > 75){
-                gameMode.GameModeSelf.SelectedCandy = null
-                GamePlay.Swap(self, gameMode.GameModeSelf.TargetCandy)
-            }
-        }
-        if (!gameMode.GameModeSelf.IsMoveH && !gameMode.GameModeSelf.IsMoveV){
-            if (absX > absY){
-                if (absX > 5){
-                    gameMode.GameModeSelf.TargetCandy = EntityBox.FindTarget(self, true, pointer.x - gameMode.GameModeSelf.StartX)
-                    gameMode.GameModeSelf.IsMoveH = true
-                }
-            }
-            if (absX < absY){
-                if (absY > 5){
-                    gameMode.GameModeSelf.TargetCandy = EntityBox.FindTarget(self, false, pointer.y - gameMode.GameModeSelf.StartY)
-                    gameMode.GameModeSelf.IsMoveV = true
-                }
-            }
+        if (absY > 50){
+            gameMode.GameModeSelf.SelectedCandy = null
+            gameMode.GameModeSelf.TargetCandy = EntityBox.FindTarget(self, false, pointer.y - gameMode.GameModeSelf.StartY)
+            GamePlay.Swap(self, gameMode.GameModeSelf.TargetCandy)
         }
     }
 }
