@@ -163,51 +163,49 @@
             canvas.style.height = windowHeight + "px";
         }
     }
-    
+
     function resize2() {
         var canvas = document.querySelector("canvas");
-
-            canvas.style.width = 800 + "px";
-            canvas.style.height = 600 + "px";
+        canvas.style.width = 1000 + "px";
+        canvas.style.height = 750 + "px";
     }
 
     //<cn>GamePlay</cn><ct>GamePlay</ct>
 GamePlay.Start = function(self){
-    var bg = WebEntity.New({},null,"Square.png",gameMode.NewV2(gameMode.ScreenWidth * 0.5,gameMode.ScreenHeight * 0.5),false)
-    PhaserCommon.ImageSize(bg,gameMode.NewV2(1000,1000))
-    PhaserCommon.ImageColor(bg,gameMode.NewColor("#1cb3b2",1))
-    gameMode.GameModeSelf.Ball = WebEntity.New({},EntityBall,"BasketBall.png",gameMode.NewV2(800,300),true)
-    gameMode.GameModeSelf.Basket = WebEntity.New({},EntityBox,"BasketBall.png",gameMode.NewV2(800,300),true)
-    WebEntity.AddTriggerFunction(gameMode.GameModeSelf.Basket,gameMode.GameModeSelf.Ball,EntityBox.OnTriggerEnter)
-    gameMode.GameModeSelf.Basket.Entity.setImmovable(true)
+    var bg = WebEntity.New({},null,"assets/candy_crush/candy_bg.jpg",gameMode.NewV2(500,375),false)
+    PhaserCommon.ImageSize(bg,gameMode.NewV2(1000,750))
+    var colorBg = WebEntity.New({},null,"Square.png",gameMode.NewV2(620,375),false)
+    PhaserCommon.ImageColor(colorBg,gameMode.NewColor("#1cb3b2",0.5))
+    colorBg.Entity.alpha = 0.9
+    PhaserCommon.ImageSize(colorBg,gameMode.NewV2(700,700))
+    var arrayCandy = {}
+    arrayCandy[0] = "assets/candy_crush/candy_red.png"
+    arrayCandy[1] = "assets/candy_crush/candy_green.png"
+    arrayCandy[2] = "assets/candy_crush/candy_blue.png"
+    arrayCandy[3] = "assets/candy_crush/candy_orange.png"
+    arrayCandy[4] = "assets/candy_crush/candy_violet.png"
+    arrayCandy[5] = "assets/candy_crush/candy_yellow.png"
+    for (i=0;i<8;i++){
+        for (j=0;j<8;j++){
+            var number1 = Math.random()
+            var number2 = Math.floor(number1* 6)
+            var candy = WebEntity.New({},EntityBox,arrayCandy[number2],gameMode.NewV2(320 + i*85,80 + j*85),true)
+            candy.Entity.setScale(0.75,0.75)
+        }
+    }
 }
 GamePlay.UpdateFrame = function(self){
-    if (game.input.mousePointer.isDown){
-        gameMode.GameModeSelf.Ball.vy = -1000
-    }
 }
 GamePlay.Preload = function(self){
     PhaserCommon.SetCanvas(gameMode.NewV2(1334,750),gameMode.NewColor("#000000",1))
-    gameMode.Scene.load.image("BasketBall.png","BasketBall.png")
+    gameMode.Scene.load.image("assets/candy_crush/candy_red.png","assets/candy_crush/candy_red.png")
+    gameMode.Scene.load.image("assets/candy_crush/candy_green.png","assets/candy_crush/candy_green.png")
+    gameMode.Scene.load.image("assets/candy_crush/candy_yellow.png","assets/candy_crush/candy_yellow.png")
+    gameMode.Scene.load.image("assets/candy_crush/candy_blue.png","assets/candy_crush/candy_blue.png")
+    gameMode.Scene.load.image("assets/candy_crush/candy_orange.png","assets/candy_crush/candy_orange.png")
+    gameMode.Scene.load.image("assets/candy_crush/candy_violet.png","assets/candy_crush/candy_violet.png")
     gameMode.Scene.load.image("Square.png","Square.png")
-}
-//<c></c>
-//<cn>EntityBall</cn><ct>Entity</ct>
-EntityBall = { }
-EntityBall.Start = function(self){
-    self.vy = 0
-    gameMode.Debug("start")
-}
-EntityBall.Update = function(self){
-    self.vy = self.vy + 0.016 * 1000
-    self.Entity.body.velocity.x = 200
-    self.Entity.body.velocity.y = self.vy
-    if (self.Entity.x > 1200){
-        self.Entity.x = 0
-    }
-    if (self.Entity.y > 700){
-        self.vy = -1000
-    }
+    gameMode.Scene.load.image("assets/candy_crush/candy_bg.jpg","assets/candy_crush/candy_bg.jpg")
 }
 //<c></c>
 //<cn>EntityBox</cn><ct>Entity</ct>
