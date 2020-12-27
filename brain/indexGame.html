@@ -129,11 +129,30 @@
             if (pointer.isDown)
             {
                 //GamePlay.OnPointerMove(pointer, targets)
-                gameMode.Debug(targets.length)
                 for (var i = 0; i < targets.length; ++i)
                 {
                     targets[i].EntitySelf.Class.OnPointerMove(targets[i].EntitySelf, pointer)
                 }
+                GamePlay.OnPointerMove(pointer, targets)
+            }
+        }, this);
+
+        this.input.on("pointerdown", function (pointer, targets) {
+            if (pointer.isDown)
+            {
+                //GamePlay.OnPointerMove(pointer, targets)
+                for (var i = 0; i < targets.length; ++i)
+                {
+                    targets[i].EntitySelf.Class.OnPointerDown(targets[i].EntitySelf, pointer)
+                }
+            }
+        }, this);
+
+        this.input.on("pointerup", function (pointer, targets) {
+            //GamePlay.OnPointerMove(pointer, targets)
+            for (var i = 0; i < targets.length; ++i)
+            {
+                targets[i].EntitySelf.Class.OnPointerUp(targets[i].EntitySelf, pointer)
             }
         }, this);
         GamePlay.Start(this)   
@@ -185,11 +204,17 @@ GamePlay.Start = function(self){
     arrayCandy[3] = "assets/candy_crush/candy_orange.png"
     arrayCandy[4] = "assets/candy_crush/candy_violet.png"
     arrayCandy[5] = "assets/candy_crush/candy_yellow.png"
+    gameMode.GameModeSelf.ArrayCandy = {}
     for (i=0;i<8;i++){
+        gameMode.GameModeSelf.ArrayCandy[i] = {}
         for (j=0;j<8;j++){
             var number1 = Math.random()
             var number2 = Math.floor(number1* 6)
             var candy = WebEntity.New({},EntityBox,arrayCandy[number2],gameMode.NewV2(320 + i*85,80 + j*85),true)
+            gameMode.GameModeSelf.ArrayCandy[i][j] = candy
+            x = 1
+            candy.x = i
+            candy.y = j
             candy.Entity.setScale(0.75,0.75)
         }
     }
@@ -207,6 +232,29 @@ GamePlay.Preload = function(self){
     gameMode.Scene.load.image("Square.png","Square.png")
     gameMode.Scene.load.image("assets/candy_crush/candy_bg.jpg","assets/candy_crush/candy_bg.jpg")
 }
+GamePlay.Swap = function(candyOrgin, candyTarget){
+    if (candyOrgin != null && candyTarget != null){
+        var tmp = candyOrgin.x
+        candyOrgin.x = candyTarget.x
+        candyTarget.x = tmp
+        tmp = candyOrgin.y
+        candyOrgin.y = candyTarget.y
+        candyTarget.y = tmp
+        gameMode.GameModeSelf.ArrayCandy[candyTarget.x][candyTarget.y] = candyTarget
+        gameMode.GameModeSelf.ArrayCandy[candyOrgin.x][candyOrgin.y] = candyOrgin
+    }
+    if (candyTarget != null){
+        PhaserCommon.ImagePosition(candyTarget,gameMode.NewV2(320 + candyTarget.x*85,80 + candyTarget.y*85))
+    }
+    if (candyOrgin != null){
+        PhaserCommon.ImagePosition(candyOrgin,gameMode.NewV2(320 + candyOrgin.x*85,80 + candyOrgin.y*85))
+    }
+}
+GamePlay.OnPointerMove = function(pointer, targets){
+    if (gameMode.GameModeSelf.SelectedCandy != null){
+        EntityBox.OnPointerMove2(gameMode.GameModeSelf.SelectedCandy, pointer)
+    }
+}
 //<c></c>
 //<cn>EntityBox</cn><ct>Entity</ct>
 EntityBox = { }
@@ -216,8 +264,76 @@ EntityBox.Start = function(self){
 EntityBox.Update = function(self){
 }
 EntityBox.OnPointerMove = function(self, pointer){
-    gameMode.Debug("aaaaa")
-    PhaserCommon.ImagePosition(self,gameMode.NewV2(pointer.x,pointer.y))
+}
+EntityBox.OnPointerMove2 = function(self, pointer){
+    if (gameMode.GameModeSelf.SelectedCandy == self){
+        var absX = Math.abs(pointer.x - gameMode.GameModeSelf.StartX)
+        var absY = Math.abs(pointer.y - gameMode.GameModeSelf.StartY)
+        if (gameMode.GameModeSelf.IsMoveH){
+            PhaserCommon.ImagePosition(self,gameMode.NewV2(pointer.x,self.Entity.y))
+            if (absX > 75){
+                gameMode.GameModeSelf.SelectedCandy = null
+                GamePlay.Swap(self, gameMode.GameModeSelf.TargetCandy)
+            }
+        }
+        if (gameMode.GameModeSelf.IsMoveV){
+            PhaserCommon.ImagePosition(self,gameMode.NewV2(self.Entity.x,pointer.y))
+            if (absY > 75){
+                gameMode.GameModeSelf.SelectedCandy = null
+                GamePlay.Swap(self, gameMode.GameModeSelf.TargetCandy)
+            }
+        }
+        if (!gameMode.GameModeSelf.IsMoveH && !gameMode.GameModeSelf.IsMoveV){
+            if (absX > absY){
+                if (absX > 5){
+                    gameMode.GameModeSelf.TargetCandy = EntityBox.FindTarget(self, true, pointer.x - gameMode.GameModeSelf.StartX)
+                    gameMode.GameModeSelf.IsMoveH = true
+                }
+            }
+            if (absX < absY){
+                if (absY > 5){
+                    gameMode.GameModeSelf.TargetCandy = EntityBox.FindTarget(self, false, pointer.y - gameMode.GameModeSelf.StartY)
+                    gameMode.GameModeSelf.IsMoveV = true
+                }
+            }
+        }
+    }
+}
+EntityBox.FindTarget = function(self, isH, delta){
+    var target = null
+    if (isH){
+        if (delta > 0){
+            target = gameMode.GameModeSelf.ArrayCandy[self.x+1][self.y]
+        }
+        if (delta < 0){
+            target = gameMode.GameModeSelf.ArrayCandy[self.x-1][self.y]
+        }
+    }
+    if (!isH){
+        if (delta > 0){
+            target = gameMode.GameModeSelf.ArrayCandy[self.x][self.y+1]
+        }
+        if (delta < 0){
+            target = gameMode.GameModeSelf.ArrayCandy[self.x][self.y-1]
+        }
+    }
+    return target
+}
+EntityBox.OnPointerDown = function(self, pointer){
+    gameMode.Debug("down")
+    if (gameMode.GameModeSelf.SelectedCandy == null){
+        gameMode.GameModeSelf.SelectedCandy = self
+        gameMode.GameModeSelf.StartX = pointer.x
+        gameMode.GameModeSelf.StartY = pointer.y
+        gameMode.GameModeSelf.IsMoveV = false
+        gameMode.GameModeSelf.IsMoveH = false
+        gameMode.GameModeSelf.TargetCandy = null
+    }
+}
+EntityBox.OnPointerUp = function(self, pointer){
+    gameMode.Debug("up")
+    gameMode.GameModeSelf.SelectedCandy = null
+    GamePlay.Swap(self, null)
 }
 EntityBox.OnTriggerEnter = function(self, collider){
     gameMode.Debug("cham")
