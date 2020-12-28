@@ -364,25 +364,13 @@ GamePlay.Check = function(tween, targets, self, x1, y1, x2, y2){
         }
     }
 }
-GamePlay.Drop = function(self, x1, x2, y){
-    return 0
-    for (var i = x1; i <= x2; i++){
-        gameMode.Debug("Drop" + i)
-        var tmp = self.diamonds[i][y]
-        for (var j = y; j <= 6; j++){
-            self.diamonds[i][j] = self.diamonds[i][j+1]
-        }
-        self.diamonds[i][7] = tmp
-        var idTypeDiamond = GamePlay.Random(0, 6)
-    }
-}
 GamePlay.DropVertical = function(self, match, y1, y2, x){
     gameMode.Debug("Drop" + y1 + " : " + y2)
     tmpArray = { }
     for (var i = y1; i <= y2; i++){
         tmpArray[i-y1] = self.diamonds[x][i]
     }
-    for (var i = y1; i >= 0; i--){
+    for (var i = y1-1; i >= 0; i--){
         gameMode.Debug("drop nha")
         tmp = self.diamonds[x][i]
         self.diamonds[x][i+match] = self.diamonds[x][i]
