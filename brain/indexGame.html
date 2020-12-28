@@ -198,23 +198,25 @@ GamePlay.Start = function(self){
     colorBg.Entity.alpha = 0.9
     PhaserCommon.ImageSize(colorBg,gameMode.NewV2(700,700))
     var arrayCandy = {}
+    gameMode.GameModeSelf.ArrayCandy = arrayCandy
     arrayCandy[0] = "assets/candy_crush/candy_red.png"
     arrayCandy[1] = "assets/candy_crush/candy_green.png"
     arrayCandy[2] = "assets/candy_crush/candy_blue.png"
     arrayCandy[3] = "assets/candy_crush/candy_orange.png"
     arrayCandy[4] = "assets/candy_crush/candy_violet.png"
     arrayCandy[5] = "assets/candy_crush/candy_yellow.png"
-    gameMode.GameModeSelf.ArrayCandy = {}
+    gameMode.GameModeSelf.diamonds = {}
     for (i=0;i<8;i++){
-        gameMode.GameModeSelf.ArrayCandy[i] = {}
+        gameMode.GameModeSelf.diamonds[i] = {}
         for (j=0;j<8;j++){
             var number1 = Math.random()
             var number2 = Math.floor(number1* 6)
             var candy = WebEntity.New({},EntityBox,arrayCandy[number2],gameMode.NewV2(320 + i*85,80 + j*85),true)
-            gameMode.GameModeSelf.ArrayCandy[i][j] = candy
+            gameMode.GameModeSelf.diamonds[i][j] = candy
             x = 1
             candy.x = i
             candy.y = j
+            candy.Name = number2
             candy.Entity.setScale(0.75,0.75)
         }
     }
@@ -232,6 +234,11 @@ GamePlay.Preload = function(self){
     gameMode.Scene.load.image("Square.png","Square.png")
     gameMode.Scene.load.image("assets/candy_crush/candy_bg.jpg","assets/candy_crush/candy_bg.jpg")
 }
+GamePlay.Random = function(x1, x2){
+    var number1 = Math.random()
+    var number2 = Math.floor(number1* (x2-x1))
+    return number2 + x1
+}
 GamePlay.Swap = function(candyOrgin, candyTarget){
     if (candyOrgin != null && candyTarget != null){
         var tmp = candyOrgin.x
@@ -240,16 +247,160 @@ GamePlay.Swap = function(candyOrgin, candyTarget){
         tmp = candyOrgin.y
         candyOrgin.y = candyTarget.y
         candyTarget.y = tmp
-        gameMode.GameModeSelf.ArrayCandy[candyTarget.x][candyTarget.y] = candyTarget
-        gameMode.GameModeSelf.ArrayCandy[candyOrgin.x][candyOrgin.y] = candyOrgin
+        gameMode.GameModeSelf.diamonds[candyTarget.x][candyTarget.y] = candyTarget
+        gameMode.GameModeSelf.diamonds[candyOrgin.x][candyOrgin.y] = candyOrgin
         gameMode.Debug(gameMode.Scene.tweens)
-        gameMode.Scene.tweens.add({targets: candyTarget.Entity, x: 320 + candyTarget.x*85, y: 80 + candyTarget.y*85, duration: 200, ease: "Power2", completeDelay: 0})
-        gameMode.Scene.tweens.add({targets: candyOrgin.Entity, x: 320 + candyOrgin.x*85, y: 80 + candyOrgin.y*85, duration: 200, ease: "Power2", completeDelay: 0})
+        gameMode.Scene.tweens.add({targets: candyTarget.Entity, x: 320 + candyTarget.x*85, y: 80 + candyTarget.y*85, duration: 200, ease: "Power2"})
+        gameMode.Scene.tweens.add({targets: candyOrgin.Entity, x: 320 + candyOrgin.x*85, y: 80 + candyOrgin.y*85, duration: 200, ease: "Power2", onComplete: GamePlay.Check, onCompleteParams: [ gameMode.GameModeSelf, candyOrgin.x, candyOrgin.y, candyTarget.x, candyTarget.y ]})
     }
 }
 GamePlay.OnPointerMove = function(pointer, targets){
     if (gameMode.GameModeSelf.SelectedCandy != null){
         EntityBox.OnPointerMove2(gameMode.GameModeSelf.SelectedCandy, pointer)
+    }
+}
+GamePlay.Check = function(tween, targets, self, x1, y1, x2, y2){
+    var numberMatch = 1
+    var finalIndex = 0
+    var finalMatch = 0
+    for (var i = 0; i <= 7; i++){
+        for (var j = 0; j <= 7; j++){
+            self.diamonds[i][j].IsDrop = false
+        }
+    }
+    for (var i = 0; i <= 6; i++){
+        gameMode.Debug("check : " + self.diamonds[i][y1].Name)
+        if (self.diamonds[i][y1].Name == self.diamonds[i+1][y1].Name){
+            numberMatch = numberMatch + 1
+            if (numberMatch >= 3){
+                finalIndex = i + 1
+                finalMatch = numberMatch
+                gameMode.Debug("match ngang")
+            }
+            } else {
+            numberMatch = 1
+        }
+    }
+    if (finalMatch >= 3){
+        for (var i = finalIndex-finalMatch+1; i <= finalIndex; i++){
+            self.diamonds[i][y1].IsDrop = true
+        }
+    }
+    numberMatch = 1
+    finalIndex = 0
+    finalMatch = 0
+    for (var i = 0; i <= 6; i++){
+        if (self.diamonds[i][y2].Name == self.diamonds[i+1][y2].Name){
+            numberMatch = numberMatch + 1
+            if (numberMatch >= 3){
+                finalIndex = i + 1
+                finalMatch = numberMatch
+                gameMode.Debug("match ngang")
+            }
+            } else {
+            numberMatch = 1
+        }
+    }
+    if (finalMatch >= 3){
+        for (var i = finalIndex-finalMatch+1; i <= finalIndex; i++){
+            self.diamonds[i][y2].IsDrop = true
+        }
+    }
+    numberMatch = 1
+    finalIndex = 0
+    finalMatch = 0
+    for (var i = 0; i <= 6; i++){
+        if (self.diamonds[x1][i].Name == self.diamonds[x1][i+1].Name){
+            numberMatch = numberMatch + 1
+            if (numberMatch >= 3){
+                finalIndex = i + 1
+                finalMatch = numberMatch
+                gameMode.Debug("match doc" + finalIndex)
+            }
+            } else {
+            numberMatch = 1
+        }
+    }
+    if (finalMatch >= 3){
+        for (var i = finalIndex-finalMatch+1; i <= finalIndex; i++){
+            self.diamonds[x1][i].IsDrop = true
+        }
+    }
+    numberMatch = 1
+    finalIndex = 0
+    finalMatch = 0
+    for (var i = 0; i <= 6; i++){
+        if (self.diamonds[x2][i].Name == self.diamonds[x2][i+1].Name){
+            numberMatch = numberMatch + 1
+            if (numberMatch >= 3){
+                finalIndex = i + 1
+                finalMatch = numberMatch
+                gameMode.Debug("match doc" + finalIndex)
+            }
+            } else {
+            numberMatch = 1
+        }
+    }
+    if (finalMatch >= 3){
+        for (var i = finalIndex-finalMatch+1; i <= finalIndex; i++){
+            self.diamonds[x2][i].IsDrop = true
+        }
+    }
+    for (var i = 0; i <= 7; i++){
+        var startDrop = -1
+        var endDrop = -1
+        for (var j = 0; j <= 7; j++){
+            if (self.diamonds[i][j].IsDrop == true){
+                if (startDrop < 0){
+                    startDrop = j
+                    endDrop = j
+                    } else {
+                    endDrop = j
+                }
+            }
+        }
+        if (endDrop >=0){
+            GamePlay.DropVertical(self, endDrop-startDrop + 1, startDrop, endDrop, i)
+        }
+    }
+}
+GamePlay.Drop = function(self, x1, x2, y){
+    return 0
+    for (var i = x1; i <= x2; i++){
+        gameMode.Debug("Drop" + i)
+        var tmp = self.diamonds[i][y]
+        for (var j = y; j <= 6; j++){
+            self.diamonds[i][j] = self.diamonds[i][j+1]
+        }
+        self.diamonds[i][7] = tmp
+        var idTypeDiamond = GamePlay.Random(0, 6)
+    }
+}
+GamePlay.DropVertical = function(self, match, y1, y2, x){
+    gameMode.Debug("Drop" + y1 + " : " + y2)
+    tmpArray = { }
+    for (var i = y1; i <= y2; i++){
+        tmpArray[i-y1] = self.diamonds[x][i]
+    }
+    for (var i = y1; i >= 0; i--){
+        gameMode.Debug("drop nha")
+        tmp = self.diamonds[x][i]
+        self.diamonds[x][i+match] = self.diamonds[x][i]
+        self.diamonds[x][i+match].x = x
+        self.diamonds[x][i+match].y = i+match
+        var candyTarget = self.diamonds[x][i+match]
+        gameMode.Scene.tweens.add({targets: candyTarget.Entity, x: 320 + candyTarget.x*85, y: 80 + candyTarget.y*85, duration: 200, ease: "Power2"})
+    }
+    for (var i = 0; i <= y2-y1; i++){
+        self.diamonds[x][i] = tmpArray[i]
+        self.diamonds[x][i].x = x
+        self.diamonds[x][i].y = i
+        var idTypeDiamond = GamePlay.Random(0,6)
+        var candyTarget = self.diamonds[x][i]
+        candyTarget.Name = idTypeDiamond
+        candyTarget.Entity.setTexture(gameMode.GameModeSelf.ArrayCandy[idTypeDiamond])
+        PhaserCommon.ImagePosition(candyTarget,gameMode.NewV2(320 + candyTarget.x*85,80 + i * 85-match*85))
+        gameMode.Scene.tweens.add({targets: candyTarget.Entity, x: 320 + candyTarget.x*85, y: 80 + candyTarget.y*85, duration: 200, ease: "Power2"})
     }
 }
 //<c></c>
@@ -282,18 +433,18 @@ EntityBox.FindTarget = function(self, isH, delta){
     var target = null
     if (isH){
         if (delta > 0){
-            target = gameMode.GameModeSelf.ArrayCandy[self.x+1][self.y]
+            target = gameMode.GameModeSelf.diamonds[self.x+1][self.y]
         }
         if (delta < 0){
-            target = gameMode.GameModeSelf.ArrayCandy[self.x-1][self.y]
+            target = gameMode.GameModeSelf.diamonds[self.x-1][self.y]
         }
     }
     if (!isH){
         if (delta > 0){
-            target = gameMode.GameModeSelf.ArrayCandy[self.x][self.y+1]
+            target = gameMode.GameModeSelf.diamonds[self.x][self.y+1]
         }
         if (delta < 0){
-            target = gameMode.GameModeSelf.ArrayCandy[self.x][self.y-1]
+            target = gameMode.GameModeSelf.diamonds[self.x][self.y-1]
         }
     }
     return target
