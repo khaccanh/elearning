@@ -70,6 +70,13 @@
         entity1.EntitySelf.Class.OnTriggerEnter(entity1.EntitySelf, entity2.EntitySelf)
     }
 
+    PhaserCommon.AddText = function (x, y, text, font, fontSize, color, option) {
+        option.font = font
+        option.fontSize = fontSize
+        option.fill = color
+        return gameMode.Scene.add.text(x, y, text, option)
+    }
+
     PhaserCommon.SetInteractive = function (image) {
         image.Entity.setInteractive()
     }
@@ -80,7 +87,8 @@
     }
 
     PhaserCommon.ImageColor = function (image, color) {
-        image.Entity.tint = 0x1cb3b2
+        image.Entity.tint = color.color
+        image.Entity.alpha = color.alpha
     }
 
     PhaserCommon.ImagePosition = function (image, position) {
@@ -131,9 +139,13 @@
                 //GamePlay.OnPointerMove(pointer, targets)
                 for (var i = 0; i < targets.length; ++i)
                 {
-                    targets[i].EntitySelf.Class.OnPointerMove(targets[i].EntitySelf, pointer)
+                    if (targets[i].EntitySelf != null && targets[i].EntitySelf.Class != null && targets[i].EntitySelf.Class.OnPointerMove != null) {
+                        targets[i].EntitySelf.Class.OnPointerMove(targets[i].EntitySelf, pointer)
+                    }
                 }
-                GamePlay.OnPointerMove(pointer, targets)
+                if (GamePlay.OnPointerMove != null) {
+                    GamePlay.OnPointerMove(pointer, targets)
+                }
             }
         }, this);
 
@@ -143,7 +155,9 @@
                 //GamePlay.OnPointerMove(pointer, targets)
                 for (var i = 0; i < targets.length; ++i)
                 {
-                    targets[i].EntitySelf.Class.OnPointerDown(targets[i].EntitySelf, pointer)
+                    if (targets[i].EntitySelf != null && targets[i].EntitySelf.Class != null && targets[i].EntitySelf.Class.OnPointerMove != null) {
+                        targets[i].EntitySelf.Class.OnPointerDown(targets[i].EntitySelf, pointer)
+                    }
                 }
             }
         }, this);
@@ -152,7 +166,9 @@
             //GamePlay.OnPointerMove(pointer, targets)
             for (var i = 0; i < targets.length; ++i)
             {
-                targets[i].EntitySelf.Class.OnPointerUp(targets[i].EntitySelf, pointer)
+                if (targets[i].EntitySelf != null && targets[i].EntitySelf.Class != null && targets[i].EntitySelf.Class.OnPointerMove != null) {
+                    targets[i].EntitySelf.Class.OnPointerUp(targets[i].EntitySelf, pointer)
+                }
             }
         }, this);
         GamePlay.Start(this)   
@@ -160,7 +176,7 @@
 
     function update ()
     {
-        GamePlay.UpdateFrame(this)
+        GamePlay.Update(this)
         for (var i = 0; i < gameMode.ArrayEntity.length; ++i)
         {
             gameMode.ArrayEntity[i].Class.Update(gameMode.ArrayEntity[i])
@@ -221,7 +237,7 @@ GamePlay.Start = function(self){
         }
     }
 }
-GamePlay.UpdateFrame = function(self){
+GamePlay.Update = function(self){
 }
 GamePlay.Preload = function(self){
     PhaserCommon.SetCanvas(gameMode.NewV2(1334,750),gameMode.NewColor("#000000",1))
