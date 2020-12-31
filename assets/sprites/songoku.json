@@ -10,7 +10,7 @@
 			"scale": 1,
 			"frames": [
 				{
-					"filename": "idle0003.png",
+					"filename": "idle/frame0003.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -31,7 +31,7 @@
 					}
 				},
 				{
-					"filename": "idle0004.png",
+					"filename": "idle/frame0004.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -52,7 +52,7 @@
 					}
 				},
 				{
-					"filename": "idle0001.png",
+					"filename": "idle/frame0001.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -73,7 +73,7 @@
 					}
 				},
 				{
-					"filename": "idle0002.png",
+					"filename": "idle/frame0002.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -94,7 +94,7 @@
 					}
 				},
 				{
-					"filename": "idle0005.png",
+					"filename": "idle/frame0005.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -115,7 +115,7 @@
 					}
 				},
 				{
-					"filename": "idle0006.png",
+					"filename": "idle/frame0006.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -136,7 +136,7 @@
 					}
 				},
 				{
-					"filename": "run0004.png",
+					"filename": "run/frame0004.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -157,7 +157,7 @@
 					}
 				},
 				{
-					"filename": "run0007.png",
+					"filename": "run/frame0007.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -178,7 +178,7 @@
 					}
 				},
 				{
-					"filename": "run0008.png",
+					"filename": "run/frame0008.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -199,7 +199,7 @@
 					}
 				},
 				{
-					"filename": "idle0007.png",
+					"filename": "idle/frame0007.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -220,7 +220,7 @@
 					}
 				},
 				{
-					"filename": "idle0008.png",
+					"filename": "idle/frame0008.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -241,7 +241,7 @@
 					}
 				},
 				{
-					"filename": "run0002.png",
+					"filename": "run/frame0002.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -262,7 +262,7 @@
 					}
 				},
 				{
-					"filename": "run0003.png",
+					"filename": "run/frame0003.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -283,7 +283,7 @@
 					}
 				},
 				{
-					"filename": "run0006.png",
+					"filename": "run/frame0006.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -304,7 +304,7 @@
 					}
 				},
 				{
-					"filename": "run0001.png",
+					"filename": "run/frame0001.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -325,7 +325,7 @@
 					}
 				},
 				{
-					"filename": "run0005.png",
+					"filename": "run/frame0005.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
