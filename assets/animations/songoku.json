@@ -10,7 +10,7 @@
 			"scale": 1,
 			"frames": [
 				{
-					"filename": "idle0003.png",
+					"filename": "guard_start/frame0000",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -31,7 +31,7 @@
 					}
 				},
 				{
-					"filename": "idle0004.png",
+					"filename": "guard_start/frame0001",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -52,7 +52,7 @@
 					}
 				},
 				{
-					"filename": "idle0001.png",
+					"filename": "guard_start/frame0003",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
