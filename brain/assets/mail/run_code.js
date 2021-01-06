@@ -9,7 +9,7 @@ function reloadRunCode() {
             iframeController.srcdoc = objJson.phaser
         }
     };
-    xhttp.open("GET", "https://128.199.168.250:8100/api/CodeLuas/" + indexCode, true);
+    xhttp.open("GET", "https://canh.vinaas.com/api/CodeLuas/" + indexCode, true);
     xhttp.send()
 }
 
