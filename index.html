@@ -1,81 +1,162 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trắc nghiệm Sức khỏe</title>
+  <meta charset="utf-8" />
+  <title>Bài trắc nghiệm sức khoẻ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; max-width: 700px; margin: auto; }
-    h2 { color: #2c3e50; }
-    .question { margin-bottom: 25px; padding: 15px; border: 1px solid #ccc; border-radius: 10px; }
-    .result { margin-top: 10px; font-weight: bold; color: #c0392b; }
-    .btn { margin-top: 10px; padding: 8px 16px; cursor: pointer; }
+    body {font-family: system-ui, sans-serif; max-width: 800px; margin: 0 auto; padding: 2rem;}
+    h1 {color:#1a73e8;margin-top:0}
+    fieldset{border:1px solid #ccc;padding:1rem;margin-top:1.5rem}
+    legend{font-weight:bold}
+    label.option{display:block;margin:0.4rem 0}
+    button{margin-top:1.5rem;padding:0.6rem 1.2rem;font-size:1rem}
+    .ok{color:green;margin-top:1rem}
+    .err{color:red;margin-top:1rem}
+    table{border-collapse:collapse;width:100%;margin-top:2rem}
+    th,td{border:1px solid #ccc;padding:.4rem;text-align:left;font-size:.9rem}
+    th{background:#f2f2f2}
   </style>
 </head>
 <body>
-  <h1>Bài Trắc Nghiệm Sức Khỏe</h1>
+<h1>Bài trắc nghiệm sức khoẻ</h1>
 
-  <div class="question" id="q1">
-    <h2>Câu 1: Hãy chọn các biểu hiện mà bạn đang gặp phải</h2>
-    <form id="form1">
-      <label><input type="checkbox" name="symptom" value="1"> Sốt tái phát sau khi đã hết sốt một thời gian</label><br>
-      <label><input type="checkbox" name="symptom" value="2"> Co giật</label><br>
-      <label><input type="checkbox" name="symptom" value="3"> Khó thở hoặc hụt hơi</label><br>
-      <label><input type="checkbox" name="symptom" value="4"> Khó tỉnh táo hoặc lú lẫn</label><br>
-    </form>
-    <div class="result" id="result1"></div>
-  </div>
+<form id="quizForm">
+  <label>Email
+    <input name="email" type="email" required />
+  </label>
 
-  <div class="question" id="q2">
-    <h2>Câu 2: Bạn bao nhiêu tuổi?</h2>
-    <form id="form2">
-      <input type="number" id="age" placeholder="Nhập tuổi của bạn">
-    </form>
-    <div class="result" id="result2"></div>
-  </div>
+  <label>Họ tên
+    <input name="name" required />
+  </label>
 
-  <button class="btn" onclick="handleSubmit()">Gửi kết quả</button>
+  <div id="quizContainer"></div>
 
-  <script>
-    function evaluateQ1() {
-      const checkboxes = document.querySelectorAll('#form1 input[type="checkbox"]');
-      return Array.from(checkboxes).some(cb => cb.checked);
+  <button type="submit">Gửi kết quả</button>
+</form>
+<div id="msg"></div>
+
+<script>
+// == Config ==
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzSi_WUR7KLRfL1tscj6TVNKgM9O-800-lG-CwxxEG11kAGs7EpqZj4Fni8O-z3zXRlQw/exec";
+const QUESTIONS = [
+  {
+    "text": "Hãy chọn các biểu hiện mà bạn đang gặp phải",
+    "options": [
+      "Sốt cao trên 38.5°C (101.3°F) kéo dài hơn 3 ngày",
+      "Sốt tái phát sau khi đã hết sốt một thời gian",
+      "Co giật",
+      "Khó thở hoặc hụt hơi",
+      "Khó tỉnh táo hoặc lú lẫn",
+      "Chóng mặt kéo dài",
+      "Mất nước",
+      "Đau ngực hoặc cảm giác đè nén ở ngực",
+      "Đau họng dữ dội, đau đầu hoặc đau xoang nghiêm trọng",
+      "Cực kỳ yếu hoặc đau cơ nghiêm trọng",
+      "Bệnh lý nền trở nên trầm trọng hơn",
+      "Triệu chứng trở nặng hoặc không cải thiện"
+    ],
+    "multiple": true
+  },
+  {
+    "text": "Bạn bao nhiêu tuổi?",
+    "options": [
+      "Dưới 5 tuổi",
+      "Trên 65 tuổi"
+    ],
+    "multiple": false
+  },
+  {
+    "text": "Bạn thuộc nhóm nào sau đây?",
+    "options": [
+      "Phụ nữ mang thai",
+      "Hen suyễn",
+      "Phổi tắc nghẽn mạch",
+      "Tim mạch",
+      "Tiểu đường",
+      "Suy thận",
+      "Ngoài các đối tượng trên"
+    ],
+    "multiple": true
+  }
+];
+
+// == Render Quiz ==
+const container = document.getElementById('quizContainer');
+QUESTIONS.forEach((q, idx) => {
+  const fs = document.createElement('fieldset');
+  const legend = document.createElement('legend');
+  legend.textContent = (idx+1) + '. ' + q.text;
+  fs.appendChild(legend);
+
+  q.options.forEach((opt, oidx) => {
+    const id = `q${idx}_opt${oidx}`;
+    const label = document.createElement('label');
+    label.className = 'option';
+    const inp = document.createElement('input');
+    inp.type = q.multiple ? 'checkbox' : 'radio';
+    inp.name = `q${idx}` + (q.multiple ? '[]' : '');
+    inp.value = opt;
+    inp.id = id;
+    label.appendChild(inp);
+    const span = document.createElement('span');
+    span.textContent = ' ' + opt;
+    label.appendChild(span);
+    fs.appendChild(label);
+  });
+  container.appendChild(fs);
+});
+
+// == Submit ==
+document.getElementById('quizForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const formData = new FormData(form);
+  // collect answers
+  const answers = QUESTIONS.map((q, idx) => {
+    const key = `q${idx}` + (q.multiple ? '[]' : '');
+    const vals = formData.getAll(key);
+    return {
+      question: q.text,
+      answer: vals
+    };
+  });
+  // basic score: số câu đã trả lời
+  const score = answers.filter(a => a.answer.length>0).length;
+  const total = QUESTIONS.length;
+  const percent = Math.round(score*100/total);
+
+  const payload = {
+    email: formData.get('email'),
+    name : formData.get('name'),
+    score,
+    total,
+    percent,
+    note : JSON.stringify(answers)
+  };
+  try {
+    const body = new URLSearchParams(payload);
+    const r = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body
+    });
+    if ((await r.text()) === 'OK') {
+      showMsg('Đã gửi thành công!', true);
+      form.reset();
+    } else {
+      showMsg('Phản hồi khác thường từ server!', false);
     }
+  } catch(err) {
+    showMsg('Lỗi kết nối: '+err.message, false);
+  }
+});
 
-    function evaluateQ2() {
-      const age = document.getElementById("age").value;
-      return age;
-    }
-
-    function sendDataToSheet(data) {
-      fetch("https://script.google.com/macros/s/AKfycbyl0mRKz6p-7QP4XGgvvdJnu9NhICaC3_jxB7AEI-ih0o0eDy11b4nH80DJdC8pWQMJeQ/exec", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/json" }
-      })
-      .then(res => res.text())
-      .then(msg => alert("Gửi thành công!"))
-      .catch(err => alert("Lỗi gửi dữ liệu: " + err));
-    }
-
-    function handleSubmit() {
-      const symptoms = Array.from(document.querySelectorAll('#form1 input[type=checkbox]'))
-        .filter(cb => cb.checked)
-        .map(cb => cb.nextSibling.textContent.trim());
-
-      const age = document.getElementById("age").value;
-
-      document.getElementById("result1").textContent = symptoms.length > 0
-        ? "Các biểu hiện bạn gặp cần được bác sĩ thăm khám."
-        : "Bạn không có triệu chứng nghiêm trọng được liệt kê.";
-
-      document.getElementById("result2").textContent = age >= 65
-        ? "Bạn cần được theo dõi y tế đặc biệt. Hãy gặp bác sĩ."
-        : "Tuổi của bạn không thuộc nhóm nguy cơ cao.";
-
-      sendDataToSheet({ symptoms, age });
-    }
-  </script>
+function showMsg(text, ok=true) {
+  const el = document.getElementById('msg');
+  el.className = ok? 'ok':'err';
+  el.textContent = text;
+  setTimeout(()=> el.textContent='', 4000);
+}
+</script>
 </body>
 </html>
