@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trắc nghiệm Sức khỏe</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 700px; margin: auto; }
+    h2 { color: #2c3e50; }
+    .question { margin-bottom: 25px; padding: 15px; border: 1px solid #ccc; border-radius: 10px; }
+    .result { margin-top: 10px; font-weight: bold; color: #c0392b; }
+    .btn { margin-top: 10px; padding: 8px 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Bài Trắc Nghiệm Sức Khỏe</h1>
+
+  <div class="question" id="q1">
+    <h2>Câu 1: Hãy chọn các biểu hiện mà bạn đang gặp phải</h2>
+    <form id="form1">
+      <label><input type="checkbox" name="symptom" value="1"> Sốt tái phát sau khi đã hết sốt một thời gian</label><br>
+      <label><input type="checkbox" name="symptom" value="2"> Co giật</label><br>
+      <label><input type="checkbox" name="symptom" value="3"> Khó thở hoặc hụt hơi</label><br>
+      <label><input type="checkbox" name="symptom" value="4"> Khó tỉnh táo hoặc lú lẫn</label><br>
+    </form>
+    <div class="result" id="result1"></div>
+  </div>
+
+  <div class="question" id="q2">
+    <h2>Câu 2: Bạn bao nhiêu tuổi?</h2>
+    <form id="form2">
+      <input type="number" id="age" placeholder="Nhập tuổi của bạn">
+    </form>
+    <div class="result" id="result2"></div>
+  </div>
+
+  <button class="btn" onclick="handleSubmit()">Gửi kết quả</button>
+
+  <script>
+    function evaluateQ1() {
+      const checkboxes = document.querySelectorAll('#form1 input[type="checkbox"]');
+      return Array.from(checkboxes).some(cb => cb.checked);
+    }
+
+    function evaluateQ2() {
+      const age = document.getElementById("age").value;
+      return age;
+    }
+
+    function sendDataToSheet(data) {
+      fetch("https://script.google.com/macros/s/AKfycbwadakH5ZwDPcjz0cGEDv6XupHqoryc6XRZh6LJ6uXs3o05-Zhn4AMvCtLdSMKdR3H_Ag/exec", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" }
+      })
+      .then(res => res.text())
+      .then(msg => alert("Gửi thành công!"))
+      .catch(err => alert("Lỗi gửi dữ liệu: " + err));
+    }
+
+    function handleSubmit() {
+      const symptoms = Array.from(document.querySelectorAll('#form1 input[type=checkbox]'))
+        .filter(cb => cb.checked)
+        .map(cb => cb.nextSibling.textContent.trim());
+
+      const age = document.getElementById("age").value;
+
+      document.getElementById("result1").textContent = symptoms.length > 0
+        ? "Các biểu hiện bạn gặp cần được bác sĩ thăm khám."
+        : "Bạn không có triệu chứng nghiêm trọng được liệt kê.";
+
+      document.getElementById("result2").textContent = age >= 65
+        ? "Bạn cần được theo dõi y tế đặc biệt. Hãy gặp bác sĩ."
+        : "Tuổi của bạn không thuộc nhóm nguy cơ cao.";
+
+      sendDataToSheet({ symptoms, age });
+    }
+  </script>
+</body>
+</html>
